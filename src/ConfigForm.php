@@ -92,6 +92,18 @@ class ConfigForm
                     ],
                     [
                         'type' => 'text',
+                        'label' => $this->l('Captcha V3 mininum score'),
+                        'hint' => sprintf(
+                            $this->l('The minimum score required to validate the captcha is a note between 0 and 1. Default is 0.5 , you can read more about it here: %s'),
+                            '<a href="https://developers.google.com/recaptcha/docs/v3?#interpreting_the_score" target="_blank">https://developers.google.com/recaptcha/docs/v3?#interpreting_the_score</a>'
+                        ),
+                        'name' => 'CAPTCHA_V3_MINIMAL_SCORE',
+                        'required' => true,
+                        'empty_message' => $this->l('Please fill the captcha v3 minimal score.'),
+                        'tab' => 'general',
+                    ],
+                    [
+                        'type' => 'text',
                         'label' => $this->l('Captcha public key (Site key)'),
                         'name' => 'CAPTCHA_PUBLIC_KEY',
                         'required' => true,
@@ -352,6 +364,7 @@ class ConfigForm
     {
         if (Tools::isSubmit('SubmitCaptchaConfiguration')) {
             Configuration::updateValue('CAPTCHA_VERSION', Tools::getValue('CAPTCHA_VERSION'));
+            Configuration::updateValue('CAPTCHA_V3_MINIMAL_SCORE', Tools::getValue('CAPTCHA_V3_MINIMAL_SCORE'));
             Configuration::updateValue('CAPTCHA_PUBLIC_KEY', Tools::getValue('CAPTCHA_PUBLIC_KEY'));
             Configuration::updateValue('CAPTCHA_PRIVATE_KEY', Tools::getValue('CAPTCHA_PRIVATE_KEY'));
             Configuration::updateValue('CAPTCHA_ENABLE_LOGGED_CUSTOMERS', Tools::getValue('CAPTCHA_ENABLE_LOGGED_CUSTOMERS'));
@@ -377,6 +390,7 @@ class ConfigForm
     {
         return [
             'CAPTCHA_VERSION' => Tools::getValue('CAPTCHA_VERSION', Configuration::get('CAPTCHA_VERSION')),
+            'CAPTCHA_V3_MINIMAL_SCORE' => Tools::getValue('CAPTCHA_V3_MINIMAL_SCORE', Configuration::get('CAPTCHA_V3_MINIMAL_SCORE')),
             'CAPTCHA_PRIVATE_KEY' => Tools::getValue('CAPTCHA_PRIVATE_KEY', Configuration::get('CAPTCHA_PRIVATE_KEY')),
             'CAPTCHA_PUBLIC_KEY' => Tools::getValue('CAPTCHA_PUBLIC_KEY', Configuration::get('CAPTCHA_PUBLIC_KEY')),
             'CAPTCHA_ENABLE_LOGGED_CUSTOMERS' => Tools::getValue('CAPTCHA_ENABLE_LOGGED_CUSTOMERS', Configuration::get('CAPTCHA_ENABLE_LOGGED_CUSTOMERS')),
